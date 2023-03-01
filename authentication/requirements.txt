@@ -1,0 +1,10 @@
+Flask
+Flask-RESTful
+flask-jwt-extended
+pyopenssl
+psycopg2-binary
+flask-marshmallow
+Flask-SQLAlchemy
+SQLAlchemy
+marshmallow-sqlalchemy
+gunicorn
