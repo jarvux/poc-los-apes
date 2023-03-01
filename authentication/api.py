@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
+from flask_marshmallow import Marshmallow
 from flask_restful import Api, Resource
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import JWTManager
@@ -10,15 +11,17 @@ import re
 app = Flask(__name__)
 app.config["JWT_SECRET_KEY"] = "a032d27b318022b08023e64b28a76a3bc060319760c6a918a4d6e9f643442364"
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = False
-app.config[
-    "SQLALCHEMY_DATABASE_URI"] = "postgresql://postgres:GrupoC10@grupocloud.cer5khnfvz1u.us-east-1.rds.amazonaws.com:5432/proyecto"
+# app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://postgres:GrupoC10@grupocloud.cer5khnfvz1u.us-east-1.rds.amazonaws.com:5432/proyecto"
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.secret_key = 'admin'
 
 jwt = JWTManager(app)
-api = Api(app)
 
 db = SQLAlchemy(app)
+ma = Marshmallow(app)
+
+api = Api(app)
 
 
 class Usuario(db.Model):
