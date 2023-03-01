@@ -13,6 +13,10 @@ class ViewSignIn(Resource):
             if userExist is None:
                 nuevo_usuario = User(name=request.json["user"], password=request.json["password"])
                 role = request.json["role"]
+                roleExist = Role.query.filter(Role.id == role).first()
+                if roleExist is None:
+                    return 'The role does not exist', 404
+
                 rol = Role.query.get_or_404(role)
                 rol.users.append(nuevo_usuario)
                 db.session.commit()
