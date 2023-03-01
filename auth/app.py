@@ -3,7 +3,7 @@ from flask_restful import Api
 from .models import db
 from .views import \
     ViewSignIn, \
-    ViewSignIn
+    ViewLogIn
 
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS, cross_origin
@@ -18,5 +18,5 @@ cors = CORS(app)
 
 api = Api(app)
 api.add_resource(ViewSignIn, '/signIn')
-api.add_resource(ViewSignIn, '/logIn')
+api.add_resource(ViewLogIn, '/logIn')
 jwt = JWTManager(app)

@@ -2,36 +2,43 @@ from flask import request
 from ..models import db, User, Role
 from flask_restful import Resource
 from flask_jwt_extended import jwt_required, create_access_token, get_jwt_identity
+from sqlalchemy.exc import IntegrityError
+
 
 class ViewSignIn(Resource):
 
     def post(self):
-        nuevo_usuario = User(nombre=request.json["nombre"], contrasena=request.json["contrasena"])
-        db.session.add(nuevo_usuario)
-        db.session.commit()
-        token_de_acceso = create_access_token(identity = nuevo_usuario.id)
-        return {"mensaje":"usuario creado exitosamente", "token":token_de_acceso}
+        try:
+            userExist = User.query.filter(User.name == request.json["user"]).first()
+            if userExist is None:
+                nuevo_usuario = User(name=request.json["user"], password=request.json["password"])
+                role = request.json["role"]
+                rol = Role.query.get_or_404(role)
+                rol.users.append(nuevo_usuario)
+                db.session.commit()
+                token_de_acceso = create_access_token(identity=nuevo_usuario.id)
+                return {"message": "User created successfully", "token": token_de_acceso}
+            else:
+                return 'The user already exist with that role', 409
+        except IntegrityError:
+            db.session.rollback()
+            return 'The user already exist with that role', 409
 
-
-    def put(self, id_usuario):
-        usuario = User.query.get_or_404(id_usuario)
-        usuario.contrasena = request.json.get("contrasena",usuario.contrasena)
+    def delete(self, id_user):
+        user = User.query.get_or_404(id_user)
+        db.session.delete(user)
         db.session.commit()
-        return usuario_schema.dump(usuario)
+        return 'User deleted', 204
 
-    def delete(self, id_usuario):
-        usuario = User.query.get_or_404(id_usuario)
-        db.session.delete(usuario)
-        db.session.commit()
-        return '',204
 
 class ViewLogIn(Resource):
 
     def post(self):
-        usuario = User.query.filter(User.name == request.json["name"], User.password == request.json["password"]).first()
+        user = User.query.filter(User.name == request.json["user"],
+                                 User.password == request.json["password"]).first()
         db.session.commit()
-        if usuario is None:
-            return "El usuario no existe", 404
+        if user is None:
+            return "The user // password does not exist", 404
         else:
-            token_de_acceso = create_access_token(identity = usuario.id)
-            return {"mensaje":"Inicio de sesión exitoso", "token": token_de_acceso}
+            token_de_acceso = create_access_token(identity=user.id)
+            return {"message": "User created successfully", "token": token_de_acceso}
