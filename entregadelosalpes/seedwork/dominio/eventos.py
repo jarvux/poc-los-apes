@@ -3,19 +3,19 @@ from datetime import datetime
 import uuid
 
 @dataclass
-class Entidad:
+class EventoDominio():
     id: uuid.UUID = field(hash=True)
     _id: uuid.UUID = field(init=False, repr=False, hash=True)
-    fecha_creacion: datetime = field(default=datetime.now())
+    fecha_evento: datetime =  field(default=datetime.now())
 
     @classmethod
     def siguiente_id(self) -> uuid.UUID:
-        return uuid.uuid4
-    
+        return uuid.uuid4()
+
     @property
     def id(self):
         return self._id
 
-@dataclass
-class AgregacionRaiz(Entidad):
-    ...
+    @id.setter
+    def id(self, id: uuid.UUID) -> None:
+        self._id = self.siguiente_id()

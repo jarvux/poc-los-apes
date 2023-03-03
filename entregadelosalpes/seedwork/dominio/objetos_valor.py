@@ -12,10 +12,6 @@ class Codigo(ABC, ObjetoValor):
 
 class Orden(ABC, ObjetoValor):
     @abstractmethod
-    def estado(self):
-        ...
-    
-    @abstractmethod
     def fecha_creacion(self) -> datetime:
         ...
     
