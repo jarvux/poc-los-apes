@@ -6,6 +6,12 @@ import entregadelosalpes.modulos.orden.dominio.objetos_valor as ov
 from entregadelosalpes.modulos.orden.dominio.eventos import OrdenCreada, OrdenDespachada, OrdenEntregada
 from entregadelosalpes.seedwork.dominio.entidades import AgregacionRaiz, Entidad
 
+@dataclass
+class Items(Entidad):
+    productos: list[ov.Items] = field(default_factory=list[ov.Items])
+
+    def obtener_items(self, productos: list[Producto]):
+        return self.productos
 
 @dataclass
 class Orden(AgregacionRaiz):
