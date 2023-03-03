@@ -2,6 +2,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 import uuid
 
+from entregadelosalpes.seedwork.dominio.objetos_valor import Producto
 import entregadelosalpes.modulos.orden.dominio.objetos_valor as ov
 from entregadelosalpes.modulos.orden.dominio.eventos import OrdenCreada, OrdenDespachada, OrdenEntregada
 from entregadelosalpes.seedwork.dominio.entidades import AgregacionRaiz, Entidad
