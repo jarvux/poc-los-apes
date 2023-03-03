@@ -7,7 +7,7 @@ from flask import redirect, render_template, request, session, url_for
 from flask import Response
 from entregadelosalpes.modulos.orden.aplicacion.mapeadores import MapeadorOrdenDTOJson
 
-bp = api.crear_blueprint('ordenes', '/ordenes')
+bp = api.crear_blueprint('ordenes', '/')
 
 @bp.route('/ordenes', methods=('POST',))
 def crear():

@@ -1,7 +1,8 @@
 from entregadelosalpes.seedwork.aplicacion.dto import Mapeador as AppMap
 from entregadelosalpes.seedwork.dominio.repositorios import Mapeador as RepMap
 from entregadelosalpes.modulos.orden.dominio.entidades import Orden
-from entregadelosalpes.modulos.orden.dominio.objetos_valor import Orden, Producto, Items
+from entregadelosalpes.seedwork.dominio.objetos_valor import Producto
+from entregadelosalpes.modulos.orden.dominio.objetos_valor import Orden, Items
 from .dto import OrdenDTO, ItemsDTO, ProductoDTO
 
 from datetime import datetime
