@@ -28,8 +28,7 @@ class ServicioOrden(Servicio):
         orden: Orden = self.fabrica_ordenes.crear_objeto(orden_dto, MapeadorOrden())
         orden.crear_orden(orden)
 
-        repositorio = self.fabrica_repositorio.crear_objeto(RepositorioOrdenes.__class__)
-        
+        #repositorio = self.fabrica_repositorio.crear_objeto(RepositorioOrdenes.__class__)
         #UnidadTrabajoPuerto.registrar_batch(repositorio.agregar, orden)
         #UnidadTrabajoPuerto.savepoint()
         #UnidadTrabajoPuerto.commit()

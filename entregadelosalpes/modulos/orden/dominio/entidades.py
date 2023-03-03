@@ -9,9 +9,9 @@ from entregadelosalpes.seedwork.dominio.entidades import AgregacionRaiz, Entidad
 
 @dataclass
 class Items(Entidad):
-    productos: list[ov.Items] = field(default_factory=list[ov.Items])
+    productos: list[Producto] = field(default_factory=list[Producto])
 
-    def obtener_items(self, productos: list[Producto]):
+    def obtener_items(self):
         return self.productos
 
 @dataclass
@@ -21,10 +21,10 @@ class Orden(AgregacionRaiz):
     items: list[ov.Items] = field(default_factory=list[ov.Items])
 
     def crear_orden(self, orden: Orden):
-        self.id_orden = orden.id_orden
+        self.id_orden = orden.id
         self.estado = orden.estado
         self.items = orden.items
-        self.agregar_evento(OrdenCreada(id_orden=self.id, id_cliente=self.id_cliente, estado=self.estado.name, fecha_creacion=self.fecha_creacion))
+        self.agregar_evento(OrdenCreada(id_orden=self.id, id_cliente=self.id_cliente, estado=self.estado, fecha_creacion=self.fecha_creacion))
 
     def despachar_orden(self):
         self.estado = ov.EstadoOrden.DESPACHADA

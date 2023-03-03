@@ -1,6 +1,6 @@
 from entregadelosalpes.seedwork.aplicacion.dto import Mapeador as AppMap
 from entregadelosalpes.seedwork.dominio.repositorios import Mapeador as RepMap
-from entregadelosalpes.modulos.orden.dominio.entidades import Orden
+from entregadelosalpes.modulos.orden.dominio.entidades import Orden as OrdenEntidad
 from entregadelosalpes.seedwork.dominio.objetos_valor import Producto
 from entregadelosalpes.modulos.orden.dominio.objetos_valor import Orden, Items
 from .dto import OrdenDTO, ItemsDTO, ProductoDTO
@@ -12,7 +12,7 @@ class MapeadorOrdenDTOJson(AppMap):
         productos_dto: list[ProductoDTO] = list()
         for item in items.get('productos', list()):
             producto_dto: ProductoDTO = ProductoDTO(item.get('fecha_creacion'), item.get('fecha_modificacion'), item.get('nombre'), item.get('precio')) 
-            productos_dto.append(Producto(producto_dto))
+            productos_dto.append(producto_dto)
 
         return ItemsDTO(productos_dto)
 
@@ -47,9 +47,9 @@ class MapeadorOrden(RepMap):
         return Items(productos)
 
     def obtener_tipo(self) -> type:
-        return Orden.__class__
+        return OrdenEntidad.__class__
 
-    def entidad_a_dto(self, entidad: Orden) -> OrdenDTO:
+    def entidad_a_dto(self, entidad: OrdenEntidad) -> OrdenDTO:
         fecha_creacion = entidad.fecha_creacion.strftime(self._FORMATO_FECHA)
         fecha_actualizacion = entidad.fecha_actualizacion.strftime(self._FORMATO_FECHA)
         _id = str(entidad.id)
@@ -69,8 +69,8 @@ class MapeadorOrden(RepMap):
         
         return OrdenDTO(fecha_creacion, fecha_actualizacion, _id, items)
 
-    def dto_a_entidad(self, dto: OrdenDTO) -> Orden:
-        orden = Orden()
+    def dto_a_entidad(self, dto: OrdenDTO) -> OrdenEntidad:
+        orden = OrdenEntidad()
         orden.items = list()
 
         items_dto: list[ItemsDTO] = dto.items
@@ -79,4 +79,3 @@ class MapeadorOrden(RepMap):
             orden.items.append(self._procesar_items(itin))
         
         return orden
-
