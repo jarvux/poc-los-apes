@@ -11,7 +11,7 @@ orden_productos = db.Table(
     "orden_productos",
     db.Model.metadata,
     db.Column("orden_id", db.String, db.ForeignKey("orden.id")),
-    db.Column("producto_orden", db.Integer),
+    db.Column("producto_orden", db.String),
     db.Column("fecha_creacion", db.String),
     db.Column("fecha_modificacion", db.String),
     db.Column("nombre", db.String),

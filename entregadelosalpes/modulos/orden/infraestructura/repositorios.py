@@ -44,7 +44,8 @@ class RepositorioOrdenesSQLite(RepositorioOrdenes):
         return self._fabrica_ordenes
 
     def obtener_por_id(self, id: UUID) -> ov.Orden:
-        orden_dto = db.session.query(OrdenDTO).filter_by(id=str(id)).one()
+        orden_dto = db.session.query(OrdenDTO).filter_by(id=str(id)).first()
+        print("XXXXXXXXXobtener_por_id_________XXXXXXXXXXX",orden_dto)
         return self.fabrica_ordenes.crear_objeto(orden_dto, MapeadorOrden())
 
     def obtener_todos(self) -> list[ov.Orden]:
@@ -52,9 +53,11 @@ class RepositorioOrdenesSQLite(RepositorioOrdenes):
         raise NotImplementedError
 
     def agregar(self, orden: Orden):
+        print("------",orden)
         orden_dto = self.fabrica_ordenes.crear_objeto(orden, MapeadorOrden())
         db.session.add(orden_dto)
         db.session.commit()
+        print("---*****---",orden)
 
     def actualizar(self, orden: Orden):
         # TODO
