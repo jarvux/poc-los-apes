@@ -16,6 +16,10 @@ class Entidad:
     def id(self):
         return self._id
 
+    @id.setter
+    def id(self, id: uuid.UUID) -> None:
+        self._id = self.siguiente_id()
+
 @dataclass
 class AgregacionRaiz(Entidad):
     ...

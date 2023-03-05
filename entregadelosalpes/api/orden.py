@@ -1,3 +1,4 @@
+import logging
 import entregadelosalpes.seedwork.presentacion.api as api
 import json
 from entregadelosalpes.modulos.orden.aplicacion.servicios import ServicioOrden
@@ -15,11 +16,12 @@ def crear():
         orden_dict = request.json
 
         map_orden = MapeadorOrdenDTOJson()
+        #print("orden_dto {orden_dict}", orden_dict)
         orden_dto = map_orden.externo_a_dto(orden_dict)
-
+        print("orden_dto {orden_dto}", orden_dto)
         sr = ServicioOrden()
         dto_final = sr.crear_orden(orden_dto)
-
+        print("dto_final {dto_final}", dto_final)
         return map_orden.dto_a_externo(dto_final)
     except Exception as e:
         return Response(json.dumps(dict(error=str(e))), status=400, mimetype='application/json')

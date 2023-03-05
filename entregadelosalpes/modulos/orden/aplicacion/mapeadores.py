@@ -1,28 +1,26 @@
+import logging
 from entregadelosalpes.seedwork.aplicacion.dto import Mapeador as AppMap
 from entregadelosalpes.seedwork.dominio.repositorios import Mapeador as RepMap
 from entregadelosalpes.modulos.orden.dominio.entidades import Orden as OrdenEntidad
 from entregadelosalpes.seedwork.dominio.objetos_valor import Producto
-from entregadelosalpes.modulos.orden.dominio.objetos_valor import Orden, Items
-from .dto import OrdenDTO, ItemsDTO, ProductoDTO
+from entregadelosalpes.modulos.orden.dominio.objetos_valor import Orden
+from .dto import OrdenDTO, ProductoDTO
 
 from datetime import datetime
 
 class MapeadorOrdenDTOJson(AppMap):
-    def _procesar_items(self, items: dict) -> ItemsDTO:
-        productos_dto: list[ProductoDTO] = list()
-        for item in items.get('productos', list()):
-            producto_dto: ProductoDTO = ProductoDTO(item.get('fecha_creacion'), item.get('fecha_modificacion'), item.get('nombre'), item.get('precio')) 
-            productos_dto.append(producto_dto)
-
-        return ItemsDTO(productos_dto)
+    def _procesar_items(self, item: dict) -> ProductoDTO:
+        print("MapeadorOrdenDTOJson _procesar_items aplicacion")
+        producto_dto: ProductoDTO = ProductoDTO(item.get("fecha_creacion"), item.get("fecha_modificacion"), item.get("nombre"), item.get("precio"))
+        return producto_dto
 
     def externo_a_dto(self, externo: dict) -> OrdenDTO:
+        print("MapeadorOrdenDTOJson externo_a_dto aplicacion")
         orden_dto = OrdenDTO()
-
-        items: list[ItemsDTO] = list()
         for itin in externo.get('items', list()):
             orden_dto.items.append(self._procesar_items(itin))
 
+        print("MapeadorOrdenDTOJson externo_a_dto {orden}", orden_dto)
         return orden_dto
 
     def dto_a_externo(self, dto: OrdenDTO) -> dict:
@@ -31,51 +29,46 @@ class MapeadorOrdenDTOJson(AppMap):
 class MapeadorOrden(RepMap):
     _FORMATO_FECHA = '%Y-%m-%dT%H:%M:%SZ'
 
-    def _procesar_items(self, item_dto: ItemsDTO) -> Items:
-        productos = list()
+    def _procesar_items(self, item_dto: ProductoDTO) -> Producto:
+        print("MapeadorOrden _procesar_items aplicacion")
+        fecha_creacion = datetime.strptime(item_dto.fecha_creacion, self._FORMATO_FECHA)
+        fecha_modificacion = datetime.strptime(item_dto.fecha_modificacion, self._FORMATO_FECHA)
+        nombre = item_dto.nombre
+        precio = item_dto.precio
+        producto: Producto = Producto(fecha_creacion, fecha_modificacion, nombre, precio)
 
-        for producto_dto in item_dto.productos:
-            nombre = producto_dto.nombre.get('nombre')
-            precio = producto_dto.precio.get('precio')
-            fecha_creacion = datetime.strptime(producto_dto.fecha_creacion, self._FORMATO_FECHA)
-            fecha_modificacion = datetime.strptime(producto_dto.fecha_modificacion, self._FORMATO_FECHA)
-
-            producto: Producto = Producto(fecha_creacion, fecha_modificacion, nombre, precio)
-            
-            productos.append(producto)
-
-        return Items(productos)
+        return producto
 
     def obtener_tipo(self) -> type:
         return OrdenEntidad.__class__
 
     def entidad_a_dto(self, entidad: OrdenEntidad) -> OrdenDTO:
+        print("MapeadorOrden entidad_a_dto aplicacion")
         fecha_creacion = entidad.fecha_creacion.strftime(self._FORMATO_FECHA)
         fecha_actualizacion = entidad.fecha_actualizacion.strftime(self._FORMATO_FECHA)
         _id = str(entidad.id)
         items = list()
 
         for itin in entidad.items:
-            productos = list()
-            for item in itin.productos:
-                fecha_creacion = item.fecha_creacion.strftime(self._FORMATO_FECHA)
-                fecha_modificacion = item.fecha_modificacion.strftime(self._FORMATO_FECHA)
-                nombre = item.nombre
-                precio = item.precio
-                producto = ProductoDTO(fecha_creacion=fecha_creacion, fecha_modificacion=fecha_modificacion, nombre=nombre, precio=precio)
-                
-                productos.append(producto)
-            items.append(ItemsDTO(productos))
+            fecha_creacion = itin.fecha_creacion.strftime(self._FORMATO_FECHA)
+            fecha_modificacion = itin.fecha_modificacion.strftime(self._FORMATO_FECHA)
+            nombre = itin.nombre
+            precio = itin.precio
+            producto = ProductoDTO(fecha_creacion=fecha_creacion, fecha_modificacion=fecha_modificacion, nombre=nombre, precio=precio)
+            items.append(producto)
         
         return OrdenDTO(fecha_creacion, fecha_actualizacion, _id, items)
 
     def dto_a_entidad(self, dto: OrdenDTO) -> OrdenEntidad:
+        print("MapeadorOrden dto_a_entidad aplicacion")
+        print("MapeadorOrden Orden entidad {orden}", OrdenEntidad())
         orden = OrdenEntidad()
-        orden.items = list()
 
-        items_dto: list[ItemsDTO] = dto.items
+        orden.items = list()
+        items_dto: list[ProductoDTO] = dto.items
 
         for itin in items_dto:
+            print("MapeadorOrden dto_a_entidad aplicacion item {itin}", itin)
             orden.items.append(self._procesar_items(itin))
         
         return orden

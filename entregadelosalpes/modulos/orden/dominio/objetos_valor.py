@@ -28,7 +28,3 @@ class Orden(Orden):
 
     def estado(self) -> EstadoOrden:
         return self.estado
-
-@dataclass(frozen=True)
-class Items(ObjetoValor):
-    productos: list[Producto] = field(default_factory=list)
