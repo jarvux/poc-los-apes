@@ -1,0 +1,27 @@
+version: '3'
+
+networks:
+  sidecar:
+    driver: bridge
+services:
+  entregadelosalpes:
+    container_name: entregadelosalpes
+    hostname: entregadelosalpes
+    image: entregadelosalpes 
+    networks:
+      - sidecar
+    labels:
+      SidecarDiscover: "false"
+    ports:
+      - "5000:5000"
+
+  adaptador:
+    container_name: adaptador
+    hostname: adaptador
+    image: adaptador
+    networks:
+      - sidecar
+    environment:
+      - ENTREGADELOSALPES_ADDRESS=entregadelosalpes
+    ports:
+      - "50051:50051"
