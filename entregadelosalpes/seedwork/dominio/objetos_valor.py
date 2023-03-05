@@ -22,7 +22,7 @@ class Orden(ABC, ObjetoValor):
 @dataclass(frozen=True)
 class Producto(ObjetoValor):
     fecha_creacion: str
-    fecha_modificacion: str
+    fecha_actualizacion: str
     nombre: str
     precio: str
 

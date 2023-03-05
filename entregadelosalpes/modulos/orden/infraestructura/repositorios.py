@@ -15,10 +15,10 @@ class RepositorioProductosSQLite(RepositorioProductos):
 
     def obtener_todos(self) -> list[Producto]:
         fecha_creacion="2023-01-31 18:53:59.264253"
-        fecha_modificacion ="2023-01-31 18:53:59.264253"
+        fecha_actualizacion ="2023-01-31 18:53:59.264253"
         nombre="Test 2"
         precio="150"
-        producto = Producto(fecha_creacion, fecha_modificacion, nombre, precio)
+        producto = Producto(fecha_creacion, fecha_actualizacion, nombre, precio)
         return [producto]
 
     def agregar(self, entity: Producto):
@@ -45,6 +45,7 @@ class RepositorioOrdenesSQLite(RepositorioOrdenes):
 
     def obtener_por_id(self, id: UUID) -> ov.Orden:
         orden_dto = db.session.query(OrdenDTO).filter_by(id=str(id)).one()
+        print("RepositorioOrdenesSQLite obtener_por_id ", orden_dto)
         return self.fabrica_ordenes.crear_objeto(orden_dto, MapeadorOrden())
 
     def obtener_todos(self) -> list[ov.Orden]:

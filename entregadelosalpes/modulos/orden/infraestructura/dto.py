@@ -11,14 +11,14 @@ orden_productos = db.Table(
     "orden_productos",
     db.Model.metadata,
     db.Column("orden_id", db.String, db.ForeignKey("orden.id")),
-    db.Column("producto_orden", db.Integer),
+    db.Column("producto_orden", db.String),
     db.Column("fecha_creacion", db.String),
-    db.Column("fecha_modificacion", db.String),
+    db.Column("fecha_actualizacion", db.String),
     db.Column("nombre", db.String),
     db.Column("precio", db.String),
     db.ForeignKeyConstraint(
-        ["producto_orden", "fecha_creacion", "fecha_modificacion", "nombre", "precio"],
-        ["producto.producto_orden", "producto.fecha_creacion", "producto.fecha_modificacion", "producto.nombre", "producto.precio"]
+        ["producto_orden", "fecha_creacion", "fecha_actualizacion", "nombre", "precio"],
+        ["producto.producto_orden", "producto.fecha_creacion", "producto.fecha_actualizacion", "producto.nombre", "producto.precio"]
     )
 )
 
@@ -26,7 +26,7 @@ class Producto(db.Model):
     __tablename__ = "producto"
     producto_orden = db.Column(db.Integer, primary_key=True, nullable=False)
     fecha_creacion = db.Column(db.String, nullable=False, primary_key=True)
-    fecha_modificacion= db.Column(db.String, nullable=False, primary_key=True)
+    fecha_actualizacion = db.Column(db.String, nullable=False, primary_key=True)
     nombre = db.Column(db.String, nullable=False, primary_key=True)
     precio = db.Column(db.String, nullable=False, primary_key=True)
 

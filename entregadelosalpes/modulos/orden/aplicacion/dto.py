@@ -5,7 +5,7 @@ from entregadelosalpes.seedwork.aplicacion.dto import DTO
 @dataclass(frozen=True)
 class ProductoDTO(DTO):
     fecha_creacion: str
-    fecha_modificacion: str
+    fecha_actualizacion: str
     nombre: str
     precio: str
 

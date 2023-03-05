@@ -9,9 +9,11 @@ class _FabricaOrden(Fabrica):
     def crear_objeto(self, obj: any, mapeador: Mapeador) -> any:
         if isinstance(obj, Entidad):
             print("crear_objeto entidad_a_dto {obj}", obj)
+            print("crear_objeto entidad_a_dto {mapeador}", mapeador)
             return mapeador.entidad_a_dto(obj)
         else:
             print("crear_objeto dto_a_entidad {obj}", obj)
+            print("crear_objeto dto_a_entidad {mapeador}", mapeador)
             orden: Orden = mapeador.dto_a_entidad(obj)
             return orden
 

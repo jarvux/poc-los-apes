@@ -30,8 +30,10 @@ def crear():
 @bp.route('/ordenes/<id>', methods=('GET',))
 def dar_orden(id=None):
     if id:
-        sr = ServicioOrden()
-        
-        return sr.obtener_orden_por_id(id)
+        map_orden = MapeadorOrdenDTOJson()
+        sr = ServicioOrden().obtener_orden_por_id(id)
+        if sr : 
+            return map_orden.dto_a_externo(sr)
+        return [{'message': 'NOT FOUND'}]
     else:
         return [{'message': 'GET!'}]

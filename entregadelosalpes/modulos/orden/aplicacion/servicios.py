@@ -1,3 +1,4 @@
+from urllib import response
 from entregadelosalpes.seedwork.aplicacion.servicios import Servicio
 from entregadelosalpes.modulos.orden.dominio.entidades import Orden
 from entregadelosalpes.modulos.orden.dominio.fabricas import FabricaOrdenes
@@ -26,9 +27,10 @@ class ServicioOrden(Servicio):
     
     def crear_orden(self, orden_dto: OrdenDTO) -> OrdenDTO:
         orden: Orden = self.fabrica_ordenes.crear_objeto(orden_dto, MapeadorOrden())
-        orden.crear_orden(orden)
+        #orden.crear_orden(orden)
+        repositorio = self.fabrica_repositorio.crear_objeto(RepositorioOrdenes.__class__)
+        repositorio.agregar(orden) 
 
-        #repositorio = self.fabrica_repositorio.crear_objeto(RepositorioOrdenes.__class__)
         #UnidadTrabajoPuerto.registrar_batch(repositorio.agregar, orden)
         #UnidadTrabajoPuerto.savepoint()
         #UnidadTrabajoPuerto.commit()
@@ -37,4 +39,5 @@ class ServicioOrden(Servicio):
 
     def obtener_orden_por_id(self, id) -> OrdenDTO:
         repositorio = self.fabrica_repositorio.crear_objeto(RepositorioOrdenes.__class__)
-        return self.fabrica_ordenes.crear_objeto(repositorio.obtener_por_id(id), MapeadorOrden())
+        #return self.fabrica_ordenes.crear_objeto(repositorio.obtener_por_id(id), MapeadorOrden())
+        return repositorio.obtener_por_id(id)
