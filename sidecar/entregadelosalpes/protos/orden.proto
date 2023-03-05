@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+option java_multiple_files = true;
+option java_package = "co.edu.uniandes.misw4406";
+option java_outer_classname = "OrdenProto";
+option objc_class_prefix = "ORD";
+
+package orden;
+
+// ------------------------------
+// Servicios
+// ------------------------------
+
+service Ordenes {
+  rpc CrearOrden (Orden) returns (RespuestaOrden) {}
+  rpc ConsultarOrden (QueryOrden) returns (RespuestaOrden) {}
+}
+
+// ------------------------------
+// Entidades
+// ------------------------------
+
+message Producto {
+    google.protobuf.Timestamp fecha_creacion = 1;
+    google.protobuf.Timestamp fecha_modificacion = 2;
+
+    string nombre = 3;
+    string precio = 4;
+}
+
+message Orden {
+    optional string id = 1;
+    optional google.protobuf.Timestamp fecha_creacion = 2;
+    optional google.protobuf.Timestamp fecha_actualizacion = 3;
+    repeated Producto items = 4;
+}
+
+message QueryOrden {
+    string id = 1;
+}
+
+message RespuestaOrden {
+    string mensaje = 1;
+    optional Orden orden = 2;
+}

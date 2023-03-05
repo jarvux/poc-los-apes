@@ -1,0 +1,38 @@
+{
+	"info": {
+		"_postman_id": "4b9caca2-9fdc-4533-b7ba-73f169e21902",
+		"name": "Http EntregaDelosAlpes",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "260565"
+	},
+	"item": [
+		{
+			"name": "Http Post Create Order",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"items\":[\n        {\n            \"fecha_creacion\": \"2023-02-10T13:00:00Z\",\n            \"fecha_modificacion\": \"2023-02-10T13:00:00Z\",\n            \"nombre\": \"Test1\",\n            \"precio\": \"100\"\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/ordenes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"ordenes"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

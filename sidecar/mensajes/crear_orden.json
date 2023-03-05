@@ -1,0 +1,10 @@
+{
+    "items": [
+        {
+            "fecha_creacion": "2023-02-10T13:00:00Z",
+            "fecha_modificacion": "2023-02-10T13:00:00Z",
+            "nombre": "Test 1",
+            "precio": "100"
+        }
+    ]
+}
