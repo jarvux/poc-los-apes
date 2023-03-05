@@ -50,13 +50,22 @@ class MapeadorOrden(RepMap):
         items = list()
         print("--****items***--",entidad.items)
         for itin in entidad.items:
-            print("--****itin***--",itin)
-            fecha_creacion = itin.fecha_creacion
-            fecha_modificacion = itin.fecha_modificacion
-            nombre = itin.nombre
-            precio = itin.precio
-            producto = ProductoDTO(fecha_creacion=fecha_creacion,fecha_modificacion=fecha_modificacion, nombre=nombre, precio=precio)
-            items.append(producto)
+            if(isinstance(itin, list)):
+                for producto in itin:
+                    fecha_creacion = producto.fecha_creacion
+                    fecha_modificacion = producto.fecha_modificacion
+                    nombre = producto.nombre
+                    precio = producto.precio
+                    producto = ProductoDTO(fecha_creacion=fecha_creacion,fecha_modificacion=fecha_modificacion, nombre=nombre, precio=precio)
+                    items.append(producto)
+            else:
+                print("--****itin***--",itin)
+                fecha_creacion = itin.fecha_creacion
+                fecha_modificacion = itin.fecha_modificacion
+                nombre = itin.nombre
+                precio = itin.precio
+                producto = ProductoDTO(fecha_creacion=fecha_creacion,fecha_modificacion=fecha_modificacion, nombre=nombre, precio=precio)
+                items.append(producto)
         return OrdenDTO(fecha_creacion, fecha_actualizacion, _id, items)
 
     def dto_a_entidad(self, dto: OrdenDTO) -> OrdenEntidad:
