@@ -1,6 +1,7 @@
 from __future__ import annotations
 from dataclasses import dataclass, field
 
+
 @dataclass(frozen=True)
 class Id():
     id: str
@@ -18,4 +19,4 @@ class Password():
 
 @dataclass(frozen=True)
 class Role():
-    role: int
+    role: str

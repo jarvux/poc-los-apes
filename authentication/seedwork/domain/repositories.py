@@ -1,7 +1,7 @@
-
 from abc import ABC, abstractmethod
 from uuid import UUID
 from .entities import Entidad
+
 
 class Repository(ABC):
     @abstractmethod
@@ -13,7 +13,7 @@ class Repository(ABC):
         ...
 
     @abstractmethod
-    def agregar(self, entity: Entidad):
+    def add(self, entity: Entidad):
         ...
 
     @abstractmethod
@@ -23,17 +23,21 @@ class Repository(ABC):
     @abstractmethod
     def eliminar(self, entity_id: UUID):
         ...
-        
+
+    @abstractmethod
+    def get_user(self, name: str, password) -> Entidad:
+        ...
+
+
 class Mapper(ABC):
     @abstractmethod
-    def obtener_tipo(self) -> type:
+    def get_type(self) -> type:
         ...
 
     @abstractmethod
-    def entidad_a_dto(self, entidad: Entidad) -> any:
+    def entity_to_dto(self, entidad: Entidad) -> any:
         ...
 
     @abstractmethod
-    def dto_a_entidad(self, dto: any) -> Entidad:
+    def dto_to_entity(self, dto: any) -> Entidad:
         ...
-    

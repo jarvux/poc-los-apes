@@ -5,12 +5,12 @@ from authentication.seedwork.domain.factories import Fabrica
 from authentication.seedwork.domain.repositories import Repository
 from authentication.modules.auth.domain.repositories import RepositoryUsers
 
+
 @dataclass
 class FabricaRepositorio(Fabrica):
+
     def create_object(self, obj: type, mapper: any = None) -> Repository:
         if obj == RepositoryUsers.__class__:
             return RepositoryUsersSQLite()
-        #elif obj == RepositorioProveedores.__class__:
-        #    return RepositorioProveedoresSQLite()
         else:
             raise ExcepcionFabrica()
