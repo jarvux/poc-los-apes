@@ -53,9 +53,11 @@ class RepositorioOrdenesSQLite(RepositorioOrdenes):
         raise NotImplementedError
 
     def agregar(self, orden: Orden):
+        print("------",orden)
         orden_dto = self.fabrica_ordenes.crear_objeto(orden, MapeadorOrden())
         db.session.add(orden_dto)
         db.session.commit()
+        print("---*****---",orden)
 
     def actualizar(self, orden: Orden):
         # TODO

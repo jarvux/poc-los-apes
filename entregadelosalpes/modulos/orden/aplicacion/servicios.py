@@ -30,7 +30,6 @@ class ServicioOrden(Servicio):
         #orden.crear_orden(orden)
         repositorio = self.fabrica_repositorio.crear_objeto(RepositorioOrdenes.__class__)
         repositorio.agregar(orden) 
-
         #UnidadTrabajoPuerto.registrar_batch(repositorio.agregar, orden)
         #UnidadTrabajoPuerto.savepoint()
         #UnidadTrabajoPuerto.commit()
