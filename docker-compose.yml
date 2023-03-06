@@ -5,6 +5,9 @@ networks:
     driver: bridge
 services:
   entregadelosalpes:
+    build:
+      context: ./
+      dockerfile: entregadelosalpes.Dockerfile
     container_name: entregadelosalpes
     hostname: entregadelosalpes
     image: entregadelosalpes 
@@ -16,6 +19,9 @@ services:
       - "5000:5000"
 
   adaptador:
+    build:
+      context: ./
+      dockerfile: adaptador.Dockerfile
     container_name: adaptador
     hostname: adaptador
     image: adaptador
@@ -25,3 +31,30 @@ services:
       - ENTREGADELOSALPES_ADDRESS=entregadelosalpes
     ports:
       - "50051:50051"
+  
+  authentication:
+    build:
+        context: ./
+        dockerfile: auth.Dockerfile
+    container_name: authentication
+    hostname: authentication
+    image: authentication 
+    networks:
+      - sidecar
+    labels:
+      SidecarDiscover: "false"
+    ports:
+      - "5002:5002"
+    
+    
+
+  pulsar:
+    image: apachepulsar/pulsar:2.5.2
+    container_name: my-pulsar
+    expose:
+       - 8080
+       - 6650
+    command: >
+      /bin/bash -c
+      "bin/apply-config-from-env.py conf/standalone.conf
+      && bin/pulsar standalone"
