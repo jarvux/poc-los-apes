@@ -12,7 +12,7 @@ class OrdenCreada(EventoDominio):
     items: str = None
     estado: str = None
     fecha_creacion: datetime = None
-    
+
 @dataclass
 class OrdenDespachada(EventoDominio):
     id_orden: uuid.UUID = None

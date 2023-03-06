@@ -24,7 +24,7 @@ service Ordenes {
 
 message Producto {
     google.protobuf.Timestamp fecha_creacion = 1;
-    google.protobuf.Timestamp fecha_modificacion = 2;
+    google.protobuf.Timestamp fecha_actualizacion = 2;
 
     string nombre = 3;
     string precio = 4;

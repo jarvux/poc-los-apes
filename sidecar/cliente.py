@@ -21,7 +21,7 @@ def importar_comando_orden(json_file):
 
     for item in items:
         item['fecha_creacion'] = datetime.datetime.strptime(item['fecha_creacion'], TIMESTAMP_FORMAT)
-        item['fecha_modificacion'] = datetime.datetime.now()
+        item['fecha_actualizacion'] = datetime.datetime.now()
 
     return json_dict
 
@@ -34,9 +34,9 @@ def dict_a_proto_orden(dict_orden):
         fecha_creacion = Timestamp()
         fecha_creacion.FromSeconds(int(itin['fecha_creacion'].timestamp()))
 
-        fecha_modificacion = Timestamp()
-        fecha_modificacion.FromSeconds(int(itin['fecha_modificacion'].timestamp()))
-        items.append(orden_pb2.Producto(fecha_creacion=fecha_creacion, fecha_modificacion=fecha_modificacion, nombre=nombre, precio=precio))
+        fecha_actualizacion = Timestamp()
+        fecha_actualizacion.FromSeconds(int(itin['fecha_actualizacion'].timestamp()))
+        items.append(orden_pb2.Producto(fecha_creacion=fecha_creacion, fecha_actualizacion=fecha_actualizacion, nombre=nombre, precio=precio))
 
     return orden_pb2.Orden(id=dict_orden.get('id'), items=items)
 
