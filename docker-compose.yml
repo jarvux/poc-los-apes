@@ -58,3 +58,13 @@ services:
       /bin/bash -c
       "bin/apply-config-from-env.py conf/standalone.conf
       && bin/pulsar standalone"
+
+  entrega:
+    build:
+      context: ./
+      dockerfile: entrega.Dockerfile
+    ports:
+      - "5001:5000"
+      - "5000:5001"
+    volumes:
+      - .:/opt
