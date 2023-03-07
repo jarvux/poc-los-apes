@@ -30,8 +30,8 @@ class MapeadorOrden(RepMap):
 
     def _procesar_items(self, item_dto: ProductoDTO) -> Producto:
         print("MapeadorOrden _procesar_items aplicacion")
-        fecha_creacion = datetime.strptime(item_dto.fecha_creacion, self._FORMATO_FECHA)
-        fecha_actualizacion = datetime.strptime(item_dto.fecha_actualizacion, self._FORMATO_FECHA)
+        fecha_creacion = item_dto.fecha_creacion
+        fecha_actualizacion = item_dto.fecha_actualizacion
         nombre = item_dto.nombre
         precio = item_dto.precio
         producto: Producto = Producto(fecha_creacion, fecha_actualizacion, nombre, precio)
@@ -42,8 +42,8 @@ class MapeadorOrden(RepMap):
         return OrdenEntidad.__class__
 
     def entidad_a_dto(self, entidad: OrdenEntidad) -> OrdenDTO:
-        fecha_creacion = entidad.fecha_creacion.strftime(self._FORMATO_FECHA)
-        fecha_actualizacion = entidad.fecha_actualizacion.strftime(self._FORMATO_FECHA)
+        fecha_creacion = entidad.fecha_creacion
+        fecha_actualizacion = entidad.fecha_actualizacion
         _id = str(entidad.id)
         items = list()
         for itin in entidad.items:

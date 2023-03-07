@@ -6,7 +6,7 @@ import uuid
 class EventoDominio():
     id: uuid.UUID = field(hash=True)
     _id: uuid.UUID = field(init=False, repr=False, hash=True)
-    fecha_evento: datetime =  field(default=datetime.now())
+    fecha_evento: str =  field(default=str)
 
     @classmethod
     def siguiente_id(self) -> uuid.UUID:
