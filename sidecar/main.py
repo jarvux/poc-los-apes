@@ -6,10 +6,10 @@ from entregadelosalpes.pb2py import orden_pb2
 from entregadelosalpes.pb2py import orden_pb2_grpc
 
 
-from entregadelosalpes.servicios.orden import Orden
+from entregadelosalpes.servicios.orden import Ordenes
 
 def agregar_servicios(servidor):
-    orden_pb2_grpc.add_OrdenesServicer_to_server(Orden(), servidor)
+    orden_pb2_grpc.add_OrdenesServicer_to_server(Ordenes(), servidor)
 
 def serve():
     port = '50051'

@@ -34,6 +34,6 @@ class Producto(db.Model):
 class Orden(db.Model):
     __tablename__ = "orden"
     id = db.Column(db.String, primary_key=True)
-    fecha_creacion = db.Column(db.DateTime, nullable=False)
-    fecha_actualizacion = db.Column(db.DateTime, nullable=False)
+    fecha_creacion = db.Column(db.String, nullable=False)
+    fecha_actualizacion = db.Column(db.String, nullable=False)
     items = db.relationship('Producto', secondary=orden_productos, backref='orden')

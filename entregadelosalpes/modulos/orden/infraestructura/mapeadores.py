@@ -20,7 +20,7 @@ class MapeadorOrden(Mapeador):
             item_dict.setdefault(str(itin.producto_orden), Producto(fecha_creacion, fecha_actualizacion, nombre, precio))
 
         for k, producto in item_dict.items():
-             productos.append(producto)
+            productos.append(producto)
 
         return productos
 
@@ -43,8 +43,8 @@ class MapeadorOrden(Mapeador):
     def entidad_a_dto(self, entidad: Orden) -> OrdenDTO:
         print("MapeadorOrden entidad_a_dto infra")
         orden_dto = OrdenDTO()
-        orden_dto.fecha_creacion = entidad.fecha_creacion
-        orden_dto.fecha_actualizacion = entidad.fecha_actualizacion
+        orden_dto.fecha_creacion = str(entidad.fecha_creacion)
+        orden_dto.fecha_actualizacion = str(entidad.fecha_actualizacion)
         orden_dto.id = str(entidad.id)
         orden_dto.items = self._procesar_items(entidad.items)
 

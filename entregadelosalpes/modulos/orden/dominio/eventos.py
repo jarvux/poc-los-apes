@@ -11,14 +11,14 @@ class OrdenCreada(EventoDominio):
     id_cliente: uuid.UUID = None
     items: str = None
     estado: str = None
-    fecha_creacion: datetime = None
-    
+    fecha_creacion: str = None
+
 @dataclass
 class OrdenDespachada(EventoDominio):
     id_orden: uuid.UUID = None
-    fecha_actualizacion: datetime = None
+    fecha_actualizacion: str = None
 
 @dataclass
 class OrdenEntregada(EventoDominio):
     id_orden: uuid.UUID = None
-    fecha_actualizacion: datetime = None
+    fecha_actualizacion: str = None

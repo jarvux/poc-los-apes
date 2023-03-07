@@ -23,8 +23,8 @@ service Ordenes {
 // ------------------------------
 
 message Producto {
-    google.protobuf.Timestamp fecha_creacion = 1;
-    google.protobuf.Timestamp fecha_actualizacion = 2;
+    string fecha_creacion = 1;
+    string fecha_actualizacion = 2;
 
     string nombre = 3;
     string precio = 4;
@@ -32,8 +32,8 @@ message Producto {
 
 message Orden {
     optional string id = 1;
-    optional google.protobuf.Timestamp fecha_creacion = 2;
-    optional google.protobuf.Timestamp fecha_actualizacion = 3;
+    optional string fecha_creacion = 2;
+    optional string fecha_actualizacion = 3;
     repeated Producto items = 4;
 }
 

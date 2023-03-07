@@ -15,7 +15,7 @@ class ItemsDTO(DTO):
 
 @dataclass(frozen=True)
 class OrdenDTO(DTO):
-    fecha_creacion: datetime = field(default_factory=str)
-    fecha_actualizacion: datetime = field(default_factory=str)
+    fecha_creacion: str = field(default_factory=str)
+    fecha_actualizacion: str = field(default_factory=str)
     id: str = field(default_factory=str)
     items: list[ProductoDTO] = field(default_factory=list)
