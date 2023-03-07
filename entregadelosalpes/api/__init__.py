@@ -8,6 +8,9 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 def importar_modelos_alchemy():
     import entregadelosalpes.modulos.orden.infraestructura.dto
 
+def registrar_handlers():
+    import entregadelosalpes.modulos.orden.aplicacion
+
 def create_app(configuracion=None):
     # Init la aplicacion de Flask
     app = Flask(__name__, instance_relative_config=True)
@@ -24,7 +27,8 @@ def create_app(configuracion=None):
     from entregadelosalpes.config.db import db
 
     importar_modelos_alchemy()
-
+    registrar_handlers()
+    
     with app.app_context():
         db.create_all()
 

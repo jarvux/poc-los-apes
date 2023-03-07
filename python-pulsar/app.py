@@ -6,9 +6,9 @@ app = Flask(__name__)
 
 topic = "test_"
 
-client = pulsar.Client('pulsar://my-pulsar:6650')
-consumer = client.subscribe(topic, 'my-subscription')
-producer = client.create_producer(topic)
+client = pulsar.Client('pulsar://192.168.1.2:6650')
+consumer = client.subscribe('eventos-orden', 'eventos-orden')
+producer = client.create_producer('eventos-orden')
 
 
 @app.route("/")

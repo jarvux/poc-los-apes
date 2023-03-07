@@ -21,7 +21,7 @@ class Orden(AgregacionRaiz):
 
     def crear_orden(self, orden: Orden):
         self.items = orden.items
-        #self.agregar_evento(OrdenCreada(id_orden=self.id, id_cliente=self.id_cliente, estado=self.estado, fecha_creacion=self.fecha_creacion))
+        self.agregar_evento(OrdenCreada(id_orden=self.id, id_cliente=self.id_cliente, estado=self.estado, fecha_creacion=self.fecha_creacion))
 
     def despachar_orden(self):
         self.estado = ov.EstadoOrden.DESPACHADA

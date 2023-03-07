@@ -5,6 +5,8 @@ from entregadelosalpes.modulos.orden.dominio.entidades import Orden, Producto
 from .dto import Orden as OrdenDTO
 from .dto import Producto as ProductoDTO
 import uuid
+
+from entregadelosalpes.modulos.orden.dominio.eventos import OrdenCreada
 class MapeadorOrden(Mapeador):
     _FORMATO_FECHA = '%Y-%m-%dT%H:%M:%SZ'
 
@@ -60,3 +62,49 @@ class MapeadorOrden(Mapeador):
 
         return orden
             
+class MapadeadorEventosOrden(Mapeador):
+
+    # Versiones aceptadas
+    versions = ('v1',)
+
+    LATEST_VERSION = versions[0]
+
+    def __init__(self):
+        self.router = {
+            OrdenCreada: self._entidad_a_reserva_creada,
+        }
+
+    def obtener_tipo(self) -> type:
+        return OrdenCreada.__class__
+
+    def es_version_valida(self, version):
+        for v in self.versions:
+            if v == version:
+                return True
+        return False
+
+    def _entidad_a_orden_creada(self, entidad: OrdenCreada, version=LATEST_VERSION):
+        def v1(evento):
+            from .schema.v1.eventos import OrdenCreadaPayload, EventoOrdenCreada
+            payload = OrdenCreadaPayload(
+                id_orden=str(evento.id_orden), 
+                id_cliente=str(evento.id_cliente), 
+                items=str(evento.items), 
+                fecha_creacion= str(evento.fecha_creacion)
+            )
+            evento_integracion = EventoOrdenCreada(id=str(evento.id))
+            evento_integracion.id = str(evento.id)
+            evento_integracion.time = int(unix_time_millis(evento.fecha_creacion))
+            evento_integracion.specversion = str(version)
+            evento_integracion.type = 'OrdenCreada'
+            evento_integracion.datacontenttype = 'AVRO'
+            evento_integracion.service_name = 'entregadelosalpes'
+            evento_integracion.data = payload
+
+            return evento_integracion
+                    
+        if not self.es_version_valida(version):
+            raise Exception(f'No se sabe procesar la version {version}')
+
+        if version == 'v1':
+            return v1(entidad)       

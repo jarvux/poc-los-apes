@@ -1,5 +1,6 @@
 from dataclasses import dataclass, field
 from datetime import datetime
+from .eventos import EventoDominio 
 import uuid
 
 @dataclass
@@ -22,4 +23,14 @@ class Entidad:
 
 @dataclass
 class AgregacionRaiz(Entidad):
-    ...
+    eventos: list[EventoDominio] = field(default_factory=list)
+
+    def agregar_evento(self, evento: EventoDominio):
+        self.eventos.append(evento)
+    
+    def limpiar_eventos(self):
+        self.eventos = list()
+
+
+
+    
