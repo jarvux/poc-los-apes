@@ -2,7 +2,17 @@
 Repo con el POCs que contiene los microservicios de entregas Los Alpes
 
 ## EntregaDelosAlpes
-Escenarios probar
+
+### Estructura del proyecto
+
+Este repositorio sigue la siguiente estructura:
+- **authenticator**: En este directorio encuentra el microservicio de authentication EntregaDelosAlpes
+- **sidecar**: En este directorio encuentra el código para el adaptador gRPC de EntregaDelosAlpes. En el, podrá encontrar el módulo `entregadelosalpes`, el cual cuenta con la definición de los servicios gRPC y mensajes Protobuf en el directorio `protos`. Por otra parte, el módulo `servicios` implementa las interfaces definidas en los archivos proto anteriomente descritos. Finalmente el módulo `pb2py` aloja los archivos compilados `.proto` en Python (para ver como compilarlos lea la siguientes secciones). El archivo `main.py` corre el servidor y `cliente.py` un cliente que crea una reserva usando un mensaje en JSON definido en el directorio `mensajes`.
+- **.Dockerfile**: Cada servicio cuenta con un Dockerfile para la creación de la imagen y futura ejecución de la misma. El archivo `adaptador.Dockerfile` es el encargado de instalar las dependencias de nuestro servicio en gRPC y los comandos de ejecución. Mientras que el archivo `entregadelosalpes.Dockerfile` es el encargado de definir nuestro backend. El `auth.Dockerfile` es el encargado de definir nuestro servicio de autenticación
+- **docker-compose.yml**: Este archivo nos define la forma de componer nuestros servicios. En este caso usted puede ver como creamos el Sidecar/adaptador por medio del uso de una red común para la comunicación entre contenedoras. En el caso de desplegar esta topología en un orquestador de contenedoras, el concepto va a ser similar.
+
+
+### Escenarios probar
 
 ### Ejecutar Aplicación
 
