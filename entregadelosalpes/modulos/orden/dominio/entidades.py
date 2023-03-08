@@ -1,7 +1,6 @@
 from __future__ import annotations
 from dataclasses import dataclass, field
 import uuid
-
 from entregadelosalpes.seedwork.dominio.objetos_valor import Producto
 import entregadelosalpes.modulos.orden.dominio.objetos_valor as ov
 from entregadelosalpes.modulos.orden.dominio.eventos import OrdenCreada, OrdenDespachada, OrdenEntregada
@@ -21,8 +20,8 @@ class Orden(AgregacionRaiz):
 
     def crear_orden(self, orden: Orden):
         self.items = orden.items
-        #self.agregar_evento(OrdenCreada(id_orden=self.id, id_cliente=self.id_cliente, estado=self.estado, fecha_creacion=self.fecha_creacion))
-
+        self.agregar_evento(OrdenCreada(id_orden=self.id, id_cliente=self.id_cliente, estado=self.estado, fecha_creacion=self.fecha_creacion))
+        
     def despachar_orden(self):
         self.estado = ov.EstadoOrden.DESPACHADA
         #self.agregar_evento(OrdenDespachada(self.id, self.fecha_actualizacion))

@@ -1,7 +1,10 @@
 from dataclasses import dataclass, field
 from datetime import datetime
+from .eventos import EventoDominio 
 import uuid
+from pydispatch import dispatcher
 
+        
 @dataclass
 class Entidad:
     id: uuid.UUID = field(hash=True)
@@ -22,4 +25,14 @@ class Entidad:
 
 @dataclass
 class AgregacionRaiz(Entidad):
-    ...
+    eventos: list[EventoDominio] = field(default_factory=list)
+
+    def agregar_evento(self, evento: EventoDominio):
+        self.eventos.append(evento)
+        dispatcher.send(signal=f'{type(evento).__name__}Dominio', evento=evento)
+    def limpiar_eventos(self):
+        self.eventos = list()
+
+
+
+    
