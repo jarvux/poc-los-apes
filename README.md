@@ -2,6 +2,8 @@
 Repo con el POCs que contiene los microservicios de entregas Los Alpes
 
 ## EntregaDelosAlpes
+Escenarios probar
+
 ### Ejecutar Aplicación
 
 Desde el directorio principal ejecute el siguiente comando.
@@ -23,7 +25,7 @@ docker build . -f entregadelosalpes.Dockerfile -t entregadelosalpes
 ```
 
 ```bash
-docker build . -f auth.Dockerfile -t entregadelosalpes
+docker build . -f auth.Dockerfile -t auth
 ```
 
 ### Ejecutar la imagen docker
@@ -32,6 +34,10 @@ Para arrancar la imagen creada en el paso anterior ejecute el siguiente comando.
 
 ```bash
 docker run -p 5000:5000 entregadelosalpes
+```
+
+```bash
+docker run -p 5001:5001 auth
 ```
 
 ## Sidecar/Adaptador
