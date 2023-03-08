@@ -49,7 +49,7 @@ docker run -p 5000:5000 entregadelosalpes
 ```
 
 ```bash
-docker run -p 5001:5001 auth
+docker run -p 5002:5002 auth
 ```
 
 ## Sidecar/Adaptador
