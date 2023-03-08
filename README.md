@@ -10,12 +10,20 @@ Desde el directorio principal ejecute el siguiente comando.
 flask --app entregadelosalpes/api --debug run
 ```
 
+```bash
+flask --app authentication/api --debug run
+```
+
 ### Utilizar una imagen Docker
 
 Desde la carpeta raiz ejecutar el siguiente comando.
 
 ```bash
 docker build . -f entregadelosalpes.Dockerfile -t entregadelosalpes
+```
+
+```bash
+docker build . -f auth.Dockerfile -t entregadelosalpes
 ```
 
 ### Ejecutar la imagen docker
