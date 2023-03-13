@@ -3,7 +3,6 @@ from datetime import datetime
 from .eventos import EventoDominio 
 import uuid
 from pydispatch import dispatcher
-
         
 @dataclass
 class Entidad:
@@ -11,6 +10,7 @@ class Entidad:
     _id: uuid.UUID = field(init=False, repr=False, hash=True)
     fecha_creacion: str = field(default=str)
     fecha_actualizacion: str = field(default=str)
+
     @classmethod
     def siguiente_id(self) -> uuid.UUID:
         return uuid.uuid4()
@@ -30,6 +30,7 @@ class AgregacionRaiz(Entidad):
     def agregar_evento(self, evento: EventoDominio):
         self.eventos.append(evento)
         dispatcher.send(signal=f'{type(evento).__name__}Dominio', evento=evento)
+
     def limpiar_eventos(self):
         self.eventos = list()
 
