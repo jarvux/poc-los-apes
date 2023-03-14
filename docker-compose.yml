@@ -46,6 +46,7 @@ services:
     ports:
       - "5002:5002"
     
+
   bff:
     build:
         context: ./
@@ -71,6 +72,8 @@ services:
       "bin/apply-config-from-env.py conf/standalone.conf
       && bin/pulsar standalone"
 
+
+
   entrega:
     build:
       context: ./
@@ -80,3 +83,23 @@ services:
       - "5000:5001"
     volumes:
       - .:/opt
+
+  # MySQL8
+  db:
+    image: mysql:8
+    hostname: mysqldb
+    container_name: mysqldb
+    cap_add:
+      - SYS_NICE
+    restart: always
+    environment:
+      - MYSQL_DATABASE=reservas
+      - MYSQL_ROOT_PASSWORD=adminadmin
+    profiles: [ "aeroalpes", "db" ]
+    networks:
+      - sidecar
+    ports:
+      - '3306:3306'
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql

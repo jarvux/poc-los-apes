@@ -7,4 +7,4 @@ RUN pip install --no-cache-dir -r bff-requirements.txt
 
 COPY . .
 
-CMD [ "uvicorn", "bff.main:app", "--host", "localhost", "--port", "8003", "--reload"]
+CMD [ "flask", "--app", "./bff/api", "--debug", "run", "--host=0.0.0.0", "--port", "8003"]

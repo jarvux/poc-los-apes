@@ -1,3 +1,6 @@
+Flask==2.2.2
+Flask-SQLAlchemy==3.0.2
+flask-swagger==0.2.14
 aiopulsar-py==0.1.0a0
 fastapi==0.89.1
 uvicorn[standard]==0.20.0

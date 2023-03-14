@@ -14,7 +14,7 @@ def suscribirse_a_eventos(app=None):
     cliente = None
     try:
         cliente = pulsar.Client(f'pulsar://{utils.broker_host()}:6650')
-        consumidor = cliente.subscribe('eventos-orden', consumer_type=_pulsar.ConsumerType.Shared,subscription_name='entregadelosalpes-sub-eventos', schema=AvroSchema(EventoOrdenCreada))
+        consumidor = cliente.subscribe('new-order')
 
         while True:
             mensaje = consumidor.receive()
@@ -33,7 +33,7 @@ def suscribirse_a_comandos(app=None):
     cliente = None
     try:
         cliente = pulsar.Client(f'pulsar://{utils.broker_host()}:6650')
-        consumidor = cliente.subscribe('comandos-orden', consumer_type=_pulsar.ConsumerType.Shared, subscription_name='entregadelosalpes-sub-comandos', schema=AvroSchema(ComandoCrearReserva))
+        consumidor = cliente.subscribe('nueva-orden')
 
         while True:
             mensaje = consumidor.receive()

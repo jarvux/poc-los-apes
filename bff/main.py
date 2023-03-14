@@ -14,8 +14,6 @@ from .consumidores import suscribirse_a_topico
 from .despachadores import Despachador
 
 from . import utils
-from .api.v1.router import router as v1
-
 from sse_starlette.sse import EventSourceResponse
 
 class Config(BaseSettings):
@@ -59,5 +57,3 @@ async def stream_mensajes(request: Request):
 
     return EventSourceResponse(leer_eventos())
 
-
-app.include_router(v1, prefix="/v1")
