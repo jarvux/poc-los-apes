@@ -46,7 +46,19 @@ services:
     ports:
       - "5002:5002"
     
-    
+  bff:
+    build:
+        context: ./
+        dockerfile: bff.Dockerfile
+    container_name: bff
+    hostname: bff
+    image: bff 
+    networks:
+      - sidecar
+    labels:
+      SidecarDiscover: "false"
+    ports:
+      - "8003:8003"
 
   pulsar:
     image: apachepulsar/pulsar:2.5.2
