@@ -33,15 +33,17 @@ def suscribirse_a_comandos(app=None):
     cliente = None
     try:
         cliente = pulsar.Client(f'pulsar://{utils.broker_host()}:6650')
-        consumidor = cliente.subscribe('nueva-orden')
+        consumidor = cliente.subscribe('nueva-orden', 'nueva-orden')
 
         while True:
             mensaje = consumidor.receive()
-            print(f'Comando recibido: {mensaje.value().data}')
+            print(f'Comando recibido: {mensaje}')
+            datos = mensaje.value()
+            print(f'Evento recibido: {datos}')
 
             consumidor.acknowledge(mensaje)     
             
-        cliente.close()
+        #cliente.close()
     except:
         logging.error('ERROR: Suscribiendose al tópico de comandos!')
         traceback.print_exc()

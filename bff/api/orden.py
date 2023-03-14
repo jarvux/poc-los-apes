@@ -19,7 +19,7 @@ def crear():
         print(user_encode_data)
 
         producer.send(user_encode_data)
-
+        # client.close()
         return "OK", 200
     except Exception as e:
-        return e, 400
+        return str(e), 400
