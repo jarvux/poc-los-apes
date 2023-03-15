@@ -1,21 +1,19 @@
 import os
 from flask import Flask
 
-from entregadelosalpes.modulos.orden.infraestructura.consumidores import suscribirse_a_comandos
-
 # Identifica el directorio base
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 def importar_modelos_alchemy():
-    pass
-
+    import entregadelosalpes.modulos.orden.infraestructura.dto
 
 def registrar_handlers():
-    pass
+    import entregadelosalpes.modulos.orden.aplicacion
 
 def comenzar_consumidor(app):
     import threading
+    from entregadelosalpes.modulos.orden.infraestructura.consumidores import suscribirse_a_comandos
 
     threading.Thread(target=suscribirse_a_comandos).start()
 
@@ -39,8 +37,17 @@ def create_app(configuracion=None):
 
     with app.app_context():
         db.create_all()
-        #if not app.config.get('TESTING'):
         comenzar_consumidor(app)
+
+        #orden_dict = request.json
+        #map_orden = MapeadorOrdenDTOJson()
+        #print("orden_dto {orden_dict}", orden_dict)
+        #orden_dto = map_orden.externo_a_dto(orden_dict)
+        #print("orden_dto {orden_dto}", orden_dto)
+        #sr = ServicioOrden()
+        #dto_final = sr.crear_orden(orden_dto)
+        #print("dto_final {dto_final}", dto_final)
+        #return map_orden.dto_a_externo(dto_final)
 
     @app.route("/health")
     def health():
