@@ -17,6 +17,7 @@ def comenzar_consumidor(app):
 
     threading.Thread(target=suscribirse_a_comandos).start()
 
+
 def create_app(configuracion=None):
     # Init la aplicacion de Flask
     app = Flask(__name__, instance_relative_config=True)
@@ -39,15 +40,6 @@ def create_app(configuracion=None):
         db.create_all()
         comenzar_consumidor(app)
 
-        #orden_dict = request.json
-        #map_orden = MapeadorOrdenDTOJson()
-        #print("orden_dto {orden_dict}", orden_dict)
-        #orden_dto = map_orden.externo_a_dto(orden_dict)
-        #print("orden_dto {orden_dto}", orden_dto)
-        #sr = ServicioOrden()
-        #dto_final = sr.crear_orden(orden_dto)
-        #print("dto_final {dto_final}", dto_final)
-        #return map_orden.dto_a_externo(dto_final)
 
     @app.route("/health")
     def health():
