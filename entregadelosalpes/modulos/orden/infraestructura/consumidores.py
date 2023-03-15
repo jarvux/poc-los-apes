@@ -17,12 +17,12 @@ from entregadelosalpes.modulos.orden.aplicacion.servicios import ServicioOrden
 def suscribirse_a_comandos(app=None):
     cliente = None
     try:
-        cliente = pulsar.Client('pulsar://192.168.1.4:6650')
+        cliente = pulsar.Client('pulsar://192.168.0.3:6650')
         
         consumidor = cliente.subscribe('nueva-orden','nueva-orden')
         while True:
             mensaje = consumidor.receive()
-            print("",mensaje)
+            print("llego mensaje",mensaje)
             datos = json.loads(mensaje.value())
             
             crear_orden_evento(datos)

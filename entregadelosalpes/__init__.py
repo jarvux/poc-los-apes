@@ -1,15 +1,21 @@
 import os
 from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from flask import Flask
 
 # Identifica el directorio base
 basedir = os.path.abspath(os.path.dirname(__file__))
+
+db = None
 
 
 def importar_modelos_alchemy():
     import entregadelosalpes.modulos.orden.infraestructura.dto
 
+
 def registrar_handlers():
     import entregadelosalpes.modulos.orden.aplicacion
+
 
 def comenzar_consumidor(app):
     import threading
@@ -28,10 +34,8 @@ def create_app(configuracion=None):
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     # Inicializa la DB
-    from entregadelosalpes.config.db import init_db
-    init_db(app)
-
-    from entregadelosalpes.config.db import db
+    global db
+    db = SQLAlchemy(app)
 
     importar_modelos_alchemy()
     registrar_handlers()
@@ -39,7 +43,6 @@ def create_app(configuracion=None):
     with app.app_context():
         db.create_all()
         comenzar_consumidor(app)
-
 
     @app.route("/health")
     def health():
