@@ -14,4 +14,4 @@ def millis_a_datetime(millis):
     return datetime.datetime.fromtimestamp(millis/1000.0)
 
 def broker_host():
-    return os.getenv('BROKER_HOST', default="192.168.0.3")
+    return os.getenv('BROKER_HOST', default="192.168.1.4")

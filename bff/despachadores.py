@@ -11,7 +11,7 @@ class Despachador:
         json_schema = utils.consultar_schema_registry(schema)
         avro_schema = utils.obtener_schema_avro_de_diccionario(json_schema)
 
-        cliente = pulsar.Client(f'pulsar://192.168.0.3:6650')
+        cliente = pulsar.Client(f'pulsar://192.168.1.4:6650')
         publicador = cliente.create_producer(topico, schema=avro_schema)
         publicador.send(mensaje)
         #cliente.close()

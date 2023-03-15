@@ -9,4 +9,4 @@ COPY requirements.txt /opt/
 RUN pip3 install -r /opt/requirements.txt
 
 WORKDIR /opt
-CMD [ "flask", "--app", "./entrega/api/app.py", "--debug", "run", "--host=0.0.0.0"]
+CMD [ "flask", "--app", "./entrega", "--debug", "run", "--host=0.0.0.0"]

@@ -5,7 +5,8 @@ import time
 import logging
 import traceback
 import datetime
-
+import aiopulsar
+import json
 from entregadelosalpes.modulos.orden.infraestructura.schema.v1.eventos import EventoOrdenCreada
 from entregadelosalpes.modulos.orden.infraestructura.schema.v1.comandos import ComandoCrearOrden
 from entregadelosalpes.seedwork.infraestructura import utils
@@ -13,46 +14,27 @@ from entregadelosalpes.seedwork.infraestructura import utils
 from entregadelosalpes.modulos.orden.aplicacion.mapeadores import MapeadorOrdenDTOJson
 from entregadelosalpes.modulos.orden.aplicacion.servicios import ServicioOrden
 
-def suscribirse_a_eventos(app=None):
-    cliente = None
-    try:
-        cliente = pulsar.Client(f'pulsar://{utils.broker_host()}:6650')
-        consumidor = cliente.subscribe('new-order')
-
-        while True:
-            mensaje = consumidor.receive()
-            datos = mensaje.value().data
-            print(f'Evento recibido: {datos}')
-            consumidor.acknowledge(mensaje)     
-
-        cliente.close()
-    except:
-        logging.error('ERROR: Suscribiendose al tópico de eventos!')
-        traceback.print_exc()
-        if cliente:
-            cliente.close()
-
 def suscribirse_a_comandos(app=None):
     cliente = None
     try:
-        cliente = pulsar.Client(f'pulsar://{utils.broker_host()}:6650')
-        consumidor = cliente.subscribe('nueva-orden', 'nueva-orden')
-
+        cliente = pulsar.Client('pulsar://192.168.1.4:6650')
+        
+        consumidor = cliente.subscribe('nueva-orden','nueva-orden')
         while True:
             mensaje = consumidor.receive()
-            print(f'Comando recibido: {mensaje}')
-            datos = mensaje.value()
-            print(f'Evento recibido: {datos}')
-
+            print("",mensaje)
+            datos = json.loads(mensaje.value())
+            
             crear_orden_evento(datos)
+            print(f'Evento recibido: {datos}')
+            consumidor.acknowledge(mensaje) 
+        cliente.close()
+        
 
-            consumidor.acknowledge(mensaje)
 
     except:
         logging.error('ERROR: Suscribiendose al tópico de comandos!')
         traceback.print_exc()
-        if cliente:
-            cliente.close()
 
 
 def crear_orden_evento(orden_dict):

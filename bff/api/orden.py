@@ -8,7 +8,7 @@ from flask import redirect, render_template, request, session, url_for
 
 bp = api.crear_blueprint('ordenes', '/')
 
-client = pulsar.Client('pulsar://192.168.0.3:6650')
+client = pulsar.Client('pulsar://192.168.1.4:6650')
 producer = client.create_producer('nueva-orden')
 
 @bp.route('/ordenes', methods=('POST',))
