@@ -26,7 +26,7 @@ def suscribirse_a_comandos(app=None):
             datos = json.loads(mensaje.value())
             
             crear_orden_evento(datos)
-            print(f'Evento recibido: {datos}')
+            print(f'Evento recibido por entrega los alpes: {datos}')
             consumidor.acknowledge(mensaje) 
         cliente.close()
         

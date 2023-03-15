@@ -1,12 +1,11 @@
-FROM ubuntu:20.04
-RUN apt-get update && \
-    apt-get upgrade -y && \
-    apt-get install -y python3
+FROM python:3
 
-RUN apt-get install -y python3-pip
+EXPOSE 50052/tcp
 
-COPY requirements.txt /opt/
-RUN pip3 install -r /opt/requirements.txt
+COPY requirements.txt ./
+RUN pip install --upgrade pip
+RUN pip install --no-cache-dir -r requirements.txt
 
-WORKDIR /opt
-CMD [ "flask", "--app", "./entrega", "--debug", "run", "--host=0.0.0.0"]
+COPY . .
+
+CMD [ "python3", "./entrega/app.py"]
