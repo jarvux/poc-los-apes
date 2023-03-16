@@ -14,8 +14,14 @@ Este repositorio sigue la siguiente estructura:
 - **.Dockerfile**: Cada servicio cuenta con un Dockerfile para la creación de la imagen y futura ejecución de la misma. El archivo `adaptador.Dockerfile` es el encargado de instalar las dependencias de nuestro servicio en gRPC y los comandos de ejecución. Mientras que el archivo `entregadelosalpes.Dockerfile` es el encargado de definir nuestro backend. El `auth.Dockerfile` es el encargado de definir nuestro servicio de autenticación
 - **docker-compose.yml**: Este archivo nos define la forma de componer nuestros servicios. En este caso usted puede ver como creamos el Sidecar/adaptador por medio del uso de una red común para la comunicación entre contenedoras. En el caso de desplegar esta topología en un orquestador de contenedoras, el concepto va a ser similar.
 
+### Implementación de Patrón de Sagas
+Se usa la coreografia para comunicar a los microservicios y sus eventos, el punto de entrada es el BFF que se comunica con el MS de EntregaDeLosAlpes
+![WhatsApp Image 2023-03-15 at 10 16 00 PM](https://user-images.githubusercontent.com/78803000/225504688-a022d037-631e-4198-adb7-03a2f7a79a4b.jpeg)
+
 ### Escenarios probar
 En el siguiente enlace se encuentran los escenarios a probar [PPT](https://uniandes-my.sharepoint.com/:p:/g/personal/z_alarcon_uniandes_edu_co/Edn078mbwttJkCMHlDPYdXwBbf29RYQgqMDmh6ld9eUeRg?e=a3sTmu)
+
+### Resultado de la Experimentación
 
 ### Ejecutar Aplicación
 
