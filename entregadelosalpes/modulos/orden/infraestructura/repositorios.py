@@ -1,4 +1,4 @@
-from entregadelosalpes.config.db import db
+from entregadelosalpes import db
 from entregadelosalpes.modulos.orden.dominio.repositorios import RepositorioOrdenes, RepositorioProductos
 import entregadelosalpes.modulos.orden.dominio.objetos_valor as ov
 from entregadelosalpes.modulos.orden.dominio.entidades import Orden, Producto

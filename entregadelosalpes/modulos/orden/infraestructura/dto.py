@@ -1,4 +1,4 @@
-from entregadelosalpes.config.db import db
+from entregadelosalpes import db
 from sqlalchemy.orm import declarative_base, relationship
 from sqlalchemy import Column, ForeignKey, Integer, Table
 

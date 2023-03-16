@@ -46,10 +46,23 @@ services:
     ports:
       - "5002:5002"
     
-    
+
+  bff:
+    build:
+        context: ./
+        dockerfile: bff.Dockerfile
+    container_name: bff
+    hostname: bff
+    image: bff 
+    networks:
+      - sidecar
+    labels:
+      SidecarDiscover: "false"
+    ports:
+      - "8003:8003"
 
   pulsar:
-    image: apachepulsar/pulsar:2.5.2
+    image: apachepulsar/pulsar:2.11.0
     container_name: my-pulsar
     expose:
        - 8080
@@ -59,7 +72,9 @@ services:
       "bin/apply-config-from-env.py conf/standalone.conf
       && bin/pulsar standalone"
 
-  entrega:
+
+
+  entregas:
     build:
       context: ./
       dockerfile: entrega.Dockerfile
@@ -68,3 +83,23 @@ services:
       - "5000:5001"
     volumes:
       - .:/opt
+
+  # MySQL8
+  db:
+    image: mysql:8
+    hostname: mysqldb
+    container_name: mysqldb
+    cap_add:
+      - SYS_NICE
+    restart: always
+    environment:
+      - MYSQL_DATABASE=reservas
+      - MYSQL_ROOT_PASSWORD=adminadmin
+    profiles: [ "aeroalpes", "db" ]
+    networks:
+      - sidecar
+    ports:
+      - '3306:3306'
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql

@@ -1,4 +1,3 @@
-from entregadelosalpes.modulos.orden.dominio.eventos import OrdenCreada
 from entregadelosalpes.seedwork.aplicacion.handlers import Handler
 from entregadelosalpes.modulos.orden.infraestructura.despachadores import Despachador
 
