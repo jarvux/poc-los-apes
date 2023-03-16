@@ -1,4 +1,5 @@
 import json
+import pickle
 
 import pulsar, _pulsar
 from pulsar.schema import *
@@ -13,13 +14,13 @@ def serve():
 
         while True:
             mensaje = consumidor.receive()
-            datos = json.loads(mensaje.value())
-            print(f'Orden entregada cliente: {datos}')
+            print(type(mensaje.value()))
+            output = str(mensaje.value())
+            print(f'Orden entregada cliente: {output}')
             consumidor.acknowledge(mensaje)
         cliente.close()
-    except:
-        logging.error('ERROR: serve!')
-        traceback.print_exc()
+    except Exception as e:
+        print('ERROR: serve!', e)
 
 
 if __name__ == '__main__':

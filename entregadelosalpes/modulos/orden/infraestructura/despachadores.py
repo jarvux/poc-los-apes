@@ -12,7 +12,7 @@ class Despachador:
         self.mapper = MapadeadorEventosOrden()
 
     def _publicar_mensaje(self, mensaje, topico, schema):
-        cliente = pulsar.Client(f'pulsar://{utils.broker_host()}:6650')
+        cliente = pulsar.Client(f'pulsar://192.168.0.3:6650')
         publicador = cliente.create_producer(topico, schema=AvroSchema(EventoOrdenCreada))
         publicador.send(mensaje)
         cliente.close()

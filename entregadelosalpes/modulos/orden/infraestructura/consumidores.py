@@ -26,12 +26,9 @@ def suscribirse_a_comandos(app=None):
             datos = json.loads(mensaje.value())
             
             crear_orden_evento(datos)
-            print(f'Evento recibido por entrega los alpes: {datos}')
+            print(f'Evento recibido por bbf los alpes: {datos}')
             consumidor.acknowledge(mensaje) 
         cliente.close()
-        
-
-
     except:
         logging.error('ERROR: Suscribiendose al tópico de comandos!')
         traceback.print_exc()
