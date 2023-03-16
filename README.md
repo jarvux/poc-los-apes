@@ -9,23 +9,38 @@ Este repositorio sigue la siguiente estructura:
 - **authentication**: En este directorio encuentra el microservicio de authentication EntregaDelosAlpes.
 - **entregadelosalpes**: En este directorio encuentra el microservicio de orden EntregaDelosAlpes.
 - **entrega**: En este directorio encuentra el microservicio de consumidor de eventos desde el Apache Pulsar.
+- **bff**: En este directorio encuentra el servicio BFF el punto de entrada de la aplicación.
 - **sidecar**: En este directorio encuentra el código para el adaptador gRPC de EntregaDelosAlpes. En el, podrá encontrar el módulo `entregadelosalpes`, el cual cuenta con la definición de los servicios gRPC y mensajes Protobuf en el directorio `protos`. Por otra parte, el módulo `servicios` implementa las interfaces definidas en los archivos proto anteriomente descritos. Finalmente el módulo `pb2py` aloja los archivos compilados `.proto` en Python (para ver como compilarlos lea la siguientes secciones). El archivo `main.py` corre el servidor y `cliente.py` un cliente que crea una reserva usando un mensaje en JSON definido en el directorio `mensajes`.
 - **.Dockerfile**: Cada servicio cuenta con un Dockerfile para la creación de la imagen y futura ejecución de la misma. El archivo `adaptador.Dockerfile` es el encargado de instalar las dependencias de nuestro servicio en gRPC y los comandos de ejecución. Mientras que el archivo `entregadelosalpes.Dockerfile` es el encargado de definir nuestro backend. El `auth.Dockerfile` es el encargado de definir nuestro servicio de autenticación
 - **docker-compose.yml**: Este archivo nos define la forma de componer nuestros servicios. En este caso usted puede ver como creamos el Sidecar/adaptador por medio del uso de una red común para la comunicación entre contenedoras. En el caso de desplegar esta topología en un orquestador de contenedoras, el concepto va a ser similar.
 
+### Implementación de Patrón de Sagas
+Se usa la coreografia para comunicar a los microservicios y sus eventos, el punto de entrada es el BFF que se comunica con el MS de EntregaDeLosAlpes
+![WhatsApp Image 2023-03-15 at 10 16 00 PM](https://user-images.githubusercontent.com/78803000/225504688-a022d037-631e-4198-adb7-03a2f7a79a4b.jpeg)
+
 ### Escenarios probar
 En el siguiente enlace se encuentran los escenarios a probar [PPT](https://uniandes-my.sharepoint.com/:p:/g/personal/z_alarcon_uniandes_edu_co/Edn078mbwttJkCMHlDPYdXwBbf29RYQgqMDmh6ld9eUeRg?e=a3sTmu)
+
+### Resultado de la Experimentación
 
 ### Ejecutar Aplicación
 
 Desde el directorio principal ejecute el siguiente comando.
 
 ```bash
-flask --app entregadelosalpes/api --debug run
+flask --app entregadelosalpes --debug run
 ```
 
 ```bash
 flask --app authentication/api --debug run
+```
+
+```bash
+flask --app bff/api --debug run
+```
+
+```bash
+python entregas/app.py
 ```
 
 ### Utilizar una imagen Docker
@@ -40,6 +55,14 @@ docker build . -f entregadelosalpes.Dockerfile -t entregadelosalpes
 docker build . -f auth.Dockerfile -t auth
 ```
 
+```bash
+docker build . -f bff.Dockerfile -t bff
+```
+
+```bash
+docker build . -f entregas.Dockerfile -t entregas
+```
+
 ### Ejecutar la imagen docker
 
 Para arrancar la imagen creada en el paso anterior ejecute el siguiente comando.
@@ -50,6 +73,14 @@ docker run -p 5000:5000 entregadelosalpes
 
 ```bash
 docker run -p 5002:5002 auth
+```
+
+```bash
+docker run -p 5003:5003 bff
+```
+
+```bash
+docker run -p 50052:50052 entregas
 ```
 
 ## Sidecar/Adaptador
